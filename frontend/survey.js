@@ -151,4 +151,5 @@ document.addEventListener("DOMContentLoaded", () => {
     // Q15
     answers.q15 = document.getElementById("q15").value.trim();
   });
+
 });
