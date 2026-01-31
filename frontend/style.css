@@ -126,7 +126,7 @@ button:active{ transform: translateY(0px) scale(.99); }
 .wrap{ max-width: 1120px; margin: 0 auto; padding: 28px 18px 40px; }
 .hero{
   display:grid;
-  grid-template-columns: 1.05fr .95fr;
+  grid-template-columns: 1fr 1.6fr; /* make right column (survey) wider */
   gap: 18px;
   align-items:start;
 }
@@ -300,3 +300,101 @@ kbd{
 }
 .sep{ opacity:.5; }
 .muted{ opacity:.7; }
+
+/* Horizontal form layout: place question fields across the card width */
+.form.horizontal{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:flex-start;
+}
+.form.horizontal .field{
+  flex: 0 0 calc(50% - 12px); /* 2 columns */
+  min-width: 260px;
+}
+@media (max-width: 980px){
+  .form.horizontal .field{ flex: 0 0 100%; }
+}
+
+.field.inline{ display:flex; gap:10px; align-items:center; }
+.field.inline label{ min-width: 160px; margin:0; }
+
+/* ====== Survey-page specific overrides (scoped to avoid affecting other pages) ====== */
+.survey-page .wrap{
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 28px 18px 40px;
+}
+.survey-page .hero{
+  display: block; /* stack so survey area can expand */
+}
+.survey-page .hero-right .card{
+  width: 40%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 18px;
+}
+.survey-page .field label{ font-size: 16px; text-align: center; }
+
+/* Make survey question labels comfortable to read without changing answer styles */
+.survey-page #questions .field > label{
+  font-weight: 600;
+  line-height: 1.35;
+  color: rgba(255,255,255,0.92);
+  margin-bottom: 6px;
+}
+
+/* Center the top heading and subcopy on survey page */
+.survey-page .hero-left{ text-align: center; padding-bottom: 6px; }
+.survey-page .hero-left h1{ margin-top: 6px; margin-bottom: 6px; }
+.survey-page .hero-left .sub{ margin-left: auto; margin-right: auto; }
+
+/* Make each question label a single horizontal row (centered) and keep answers horizontal beneath */
+.survey-page #questions .field{ display:block; }
+.survey-page #questions .field > label{ display:block; width:100%; text-align:center; }
+.survey-page #questions .field .options{ 
+  margin-top:10px;
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:nowrap; /* keep options on one row */
+  overflow-x:auto; /* allow horizontal scroll on small screens */
+  padding:6px 0;
+}
+.survey-page #questions .field .options label{ white-space:nowrap; }
+
+/* Bubble styles for likert options (scoped to survey page) */
+.survey-page .option{ display:inline-flex; align-items:center; gap:10px; padding:6px 8px; border-radius:999px; border:1px solid rgba(255,255,255,.05); background: rgba(255,255,255,.01); }
+.survey-page .option input{ position:absolute; opacity:0; width:0; height:0; pointer-events:none; }
+.survey-page .option .bubble{ width:14px; height:14px; border-radius:50%; border:2px solid rgba(255,255,255,.12); background: transparent; flex:0 0 auto; box-shadow: inset 0 -1px 3px rgba(0,0,0,.18); }
+.survey-page .option .opt-text{ display:inline-block; }
+.survey-page .option input:checked + .bubble{ background: linear-gradient(135deg,var(--violet2),var(--pink)); border-color: var(--violet); box-shadow: 0 6px 18px rgba(139,92,246,.12); }
+.survey-page .option input:focus + .bubble{ outline: 2px solid rgba(167,139,250,.12); }
+
+/* Make the horizontal form stretch and center on the survey page */
+.survey-page .form.horizontal{
+  display: block;
+}
+.survey-page #questions{
+  display: block;
+}
+.survey-page #questions .field{
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin: 14px 0;
+}
+.survey-page .field .options{ justify-content:center; }
+
+/* Make submit button narrower and centered on survey page */
+.survey-page .primary.full{ width: 360px; margin: 8px auto 0; display: block; }
+
+/* Narrower selects on survey page and centered under labels */
+.survey-page .field select,
+.survey-page select{
+  width: 320px;
+  max-width: 90%;
+  display: block;
+  margin: 6px auto 0;
+}

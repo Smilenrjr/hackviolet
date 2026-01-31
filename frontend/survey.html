@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>codeFIT — Survey</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body class="survey-page">
+    <div class="bg">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="grid"></div>
+      <div class="noise"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brandtext">
+          <span class="name">codeFIT</span>
+          <span class="tag">hackviolet build</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div class="hero-left">
+          <h1>codeFIT Survey</h1>
+          <p class="sub">Answer these 15 short questions to get your personalized FIT!</p>
+        </div>
+
+        <div class="hero-right">
+          <div class="card glass">
+            <div class="card-head">
+              <h2>Survey</h2>
+              <p>Around 2 minutes.</p>
+            </div>
+
+            <form id="surveyForm" class="form horizontal">
+              <div id="questions"></div>
+
+              <button class="primary full" type="submit">Submit survey<span class="spark" aria-hidden="true"></span></button>
+            </form>
+          </div>
+      </section>
+
+      <footer class="footer">
+        <span>codeFIT</span>
+        <span class="sep">•</span>
+        <span>Violet mode</span>
+        <span class="sep">•</span>
+        <span class="muted">built for hackviolet</span>
+      </footer>
+    </main>
+
+    <script src="./survey.js"></script>
+  </body>
+</html>
