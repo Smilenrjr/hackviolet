@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>codeFIT</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <!-- Ambient background -->
+    <div class="bg">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="grid"></div>
+      <div class="noise"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brandtext">
+          <span class="name">codeFIT</span>
+          <span class="tag">hackviolet build</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="ghost" id="btn-demo" type="button">Demo</button>
+        <button class="primary" id="btn-focus" type="button">
+          Start
+          <span class="spark" aria-hidden="true"></span>
+        </button>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div class="hero-left">
+          <div class="pill">
+            <span class="dot"></span>
+            Personalized learning + job fit
+          </div>
+
+          <h1>
+            Build your <span class="accent">perfect</span> programming path.
+          </h1>
+
+          <p class="sub">
+            codeFIT compiles your interests into the most aligned languages, concepts, and roles —
+            so your next learning step actually fits.
+          </p>
+
+          <!-- Terminal typing -->
+          <div class="terminal" role="region" aria-label="codeFIT intro terminal">
+            <div class="term-top">
+              <span class="term-dot red"></span>
+              <span class="term-dot yellow"></span>
+              <span class="term-dot green"></span>
+              <span class="term-title">codeFIT — prompt</span>
+            </div>
+            <div class="term-body">
+              <div class="term-line">
+                <span class="term-user">user@codefit</span><span class="term-sep">:</span
+                ><span class="term-path">~</span><span class="term-sep">$</span>
+                <span id="typed"></span><span class="cursor" aria-hidden="true"></span>
+              </div>
+              <div class="term-hint">Tip: hit <kbd>Start</kbd> or press <kbd>Enter</kbd> in the form.</div>
+            </div>
+          </div>
+
+          <div class="cta-row">
+            <button class="primary big" id="btn-scroll" type="button">
+              Get my recommendations
+              <span class="arrow" aria-hidden="true">→</span>
+            </button>
+            <button class="ghost big" id="btn-random" type="button">Surprise me</button>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="card glass">
+            <div class="card-head">
+              <h2>Quick Fit Survey</h2>
+              <p>60 seconds. High signal. No fluff.</p>
+            </div>
+
+            <form id="survey" class="form">
+              <div class="field">
+                <label for="interest">What sounds most fun?</label>
+                <select id="interest" required>
+                  <option value="web">Designing & building slick websites</option>
+                  <option value="data">Data, patterns, and insights</option>
+                  <option value="games">Games, physics, and interactive worlds</option>
+                  <option value="systems">Performance, low-level, systems thinking</option>
+                  <option value="automation">Automation, scripts, productivity hacks</option>
+                  <option value="security">Security, hacking, and defense</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="style">Your vibe</label>
+                <select id="style" required>
+                  <option value="visual">Visual + creative</option>
+                  <option value="logical">Logical + problem-solving</option>
+                  <option value="builder">Builder + shipping</option>
+                  <option value="curious">Curious + exploratory</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="goal">Main goal</label>
+                <select id="goal" required>
+                  <option value="job">Get job-ready ASAP</option>
+                  <option value="portfolio">Build an impressive portfolio</option>
+                  <option value="learn">Learn deeply & broadly</option>
+                  <option value="startup">Ship a product/startup</option>
+                </select>
+              </div>
+
+              <button class="primary full" type="submit">
+                Compute my fit
+                <span class="spark" aria-hidden="true"></span>
+              </button>
+            </form>
+          </div>
+
+          <div class="card glass results" id="resultsCard" aria-live="polite">
+            <div class="card-head">
+              <h2>Your Recommendations</h2>
+              <p>Optimized for momentum + alignment.</p>
+            </div>
+            <div id="results" class="results-body">
+              <div class="placeholder">
+                <div class="pulse"></div>
+                Fill the survey to generate your path.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>codeFIT</span>
+        <span class="sep">•</span>
+        <span>Violet mode</span>
+        <span class="sep">•</span>
+        <span class="muted">built for hackviolet</span>
+      </footer>
+    </main>
+
+    <script src="./ui.js"></script>
+  </body>
+</html>
