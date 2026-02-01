@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
+const { execFile } = require("child_process");
 const sqlite3 = require("sqlite3").verbose();
 const { z } = require("zod");
 
@@ -41,6 +42,42 @@ db.serialize(() => {
   );
 });
 
+function writeNdjsonFile(targetPath, limit = 500, cb) {
+  db.all(
+    `SELECT id, created_at, raw_json FROM survey_responses ORDER BY id DESC LIMIT ?`,
+    [limit],
+    (err, rows) => {
+      if (err) return cb(err);
+      const lines = rows.map((r) => {
+        const a = r.raw_json ? JSON.parse(r.raw_json) : {};
+        return JSON.stringify({
+          id: r.id,
+          t: r.created_at,
+          q1: a.q1 ?? null,
+          lang: a.q1_follow ?? null,
+          lk: [
+            a.q2,
+            a.q3,
+            a.q4,
+            a.q5,
+            a.q6,
+            a.q7,
+            a.q8,
+            a.q9,
+            a.q10,
+            a.q11,
+            a.q12,
+            a.q13,
+            a.q14,
+          ],
+          note: a.q15 ?? null,
+        });
+      });
+      fs.writeFile(targetPath, lines.join("\n"), cb);
+    }
+  );
+}
+
 // ---- Validation ----
 const likert = [
   "Strongly Disagree",
@@ -79,9 +116,9 @@ app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static(path.join(__dirname)));
 
-// Serve survey page at root
+// Serve landing page at root
 app.get("/", (_req, res) => {
-  res.sendFile(path.join(__dirname, "survey.html"));
+  res.sendFile(path.join(__dirname, "ui.html"));
 });
 
 // ---- Helpers ----
@@ -239,6 +276,46 @@ app.get("/api/survey/ndjson", (req, res) => {
       res.send(lines.join("\n"));
     }
   );
+});
+
+// Run Gemini recommendations using the NDJSON file
+app.get("/api/recommendations", (req, res) => {
+  const ndjsonPath = path.join(__dirname, "responses.ndjson");
+  const script = path.join(__dirname, "..", "backend", "gemini.py");
+
+  const runGemini = () => {
+    execFile(
+      "python3",
+      [script, "--file", ndjsonPath, "--limit", "1"],
+      { timeout: 20000 },
+      (err, stdout, stderr) => {
+        if (err) {
+          console.error("Gemini script error", err, stderr);
+          return res.status(500).json({ error: "Gemini processing failed" });
+        }
+        try {
+          const parsed = JSON.parse(stdout.trim());
+          return res.json(parsed);
+        } catch (e) {
+          console.error("Gemini JSON parse error", e, stdout);
+          return res.status(500).json({ error: "Invalid Gemini output" });
+        }
+      }
+    );
+  };
+
+  if (!fs.existsSync(ndjsonPath)) {
+    // regenerate from DB, then run Gemini
+    return writeNdjsonFile(ndjsonPath, 500, (err) => {
+      if (err) {
+        console.error("NDJSON regen error", err);
+        return res.status(500).json({ error: "Failed to regenerate NDJSON" });
+      }
+      runGemini();
+    });
+  }
+
+  runGemini();
 });
 
 // Compact export: minimal keys to save tokens; optionally NDJSON via ?format=ndjson

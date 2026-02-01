@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "1.0.0",
   "description": "",
-  "main": "survey.js",
+  "main": "ui.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",

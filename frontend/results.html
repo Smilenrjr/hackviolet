@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>codeFIT — Results</title>
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      .results-wrap{max-width:960px;margin:32px auto;padding:20px;}
+      .pill-head{display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);}
+      .pill-head .dot{width:10px;height:10px;border-radius:50%;background:var(--violet);box-shadow:0 0 18px rgba(139,92,246,.9);}
+      .cards{display:grid;gap:16px;}
+      .card-list{padding:16px 18px;}
+      .card-list h2{margin:0 0 8px;font-size:18px;}
+      .card-list ul{margin:0;padding-left:18px;line-height:1.55;}
+      .muted-small{color:var(--muted);font-size:13px;}
+      .error-banner{border:1px solid rgba(248,113,113,.7);background:rgba(127,29,29,.28);color:#ffd6d6;border-radius:14px;padding:10px 12px;margin:12px 0;}
+    </style>
+  </head>
+  <body class="survey-page">
+    <div class="bg">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="grid"></div>
+      <div class="noise"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brandtext">
+          <span class="name"><a href="./ui.html" class="accent" style="text-decoration:none;">codeFIT</a></span>
+          <span class="tag">Results</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap results-wrap">
+      <div class="pill-head"><span class="dot"></span><strong>Personalized plan</strong></div>
+      <h1 style="margin:12px 0 6px;">Your recommended path</h1>
+      <p class="sub">Pulled from your latest survey. Refresh after submitting new answers.</p>
+
+      <div id="error" class="error-banner" style="display:none;"></div>
+
+      <div class="cards">
+        <div class="card glass card-list" id="languages-card">
+          <h2>Languages</h2>
+          <ul id="lang-list"></ul>
+        </div>
+        <div class="card glass card-list" id="concepts-card">
+          <h2>Concepts</h2>
+          <ul id="concept-list"></ul>
+        </div>
+        <div class="card glass card-list" id="jobs-card">
+          <h2>Job Roles</h2>
+          <ul id="jobs-list"></ul>
+        </div>
+      </div>
+
+      <p class="muted-small" id="meta"></p>
+    </main>
+
+    <script>
+      async function loadRecommendations(){
+        const errEl = document.getElementById("error");
+        errEl.style.display = "none";
+        try{
+          const resp = await fetch("/api/recommendations");
+          if(!resp.ok){
+            const msg = await resp.text();
+            throw new Error(msg || "Request failed");
+          }
+          const data = await resp.json();
+          renderList("lang-list", data.languages || []);
+          renderList("concept-list", data.concepts || []);
+          renderList("jobs-list", data.jobs || []);
+          const meta = document.getElementById("meta");
+          meta.textContent = `Source: ${data.source || "gemini"} • Using survey ids ${data.used_ids || "latest"}`;
+        }catch(err){
+          errEl.textContent = err.message || "Could not load recommendations.";
+          errEl.style.display = "block";
+        }
+      }
+
+      function renderList(id, items){
+        const ul = document.getElementById(id);
+        ul.innerHTML = "";
+        if(!items.length){
+          const li = document.createElement("li");
+          li.textContent = "No data yet.";
+          ul.appendChild(li);
+          return;
+        }
+        items.forEach(it=>{
+          const li = document.createElement("li");
+          li.innerHTML = `<strong>${it.name}</strong> — ${it.why}`;
+          ul.appendChild(li);
+        });
+      }
+
+      loadRecommendations();
+    </script>
+  </body>
+</html>
