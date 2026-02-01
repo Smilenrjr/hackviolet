@@ -31,7 +31,7 @@ except ImportError:
   sys.stderr.write("WARNING: python-dotenv not installed. Environment variables must be set manually.\\n")
 
 try:
-  import google as genai
+  import google.generativeai as genai
 except Exception:  # pragma: no cover
   genai = None
 
