@@ -81,7 +81,7 @@ app.use(express.static(path.join(__dirname)));
 
 // Serve survey page at root
 app.get("/", (_req, res) => {
-  res.sendFile(path.join(__dirname, "survey.html"));
+  res.sendFile(path.join(__dirname, "ui.html"));
 });
 
 // ---- Helpers ----
