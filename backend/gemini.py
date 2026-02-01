@@ -10,3 +10,14 @@ response = client.models.generate_content(
     contents = "Why is the sky blue"
 )
 print(response.text)
+
+
+
+
+
+
+
+
+
+
+
