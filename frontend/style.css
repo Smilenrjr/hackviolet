@@ -1,4 +1,6 @@
-/* ====== Violet “Apple+Terminal” Theme ====== */
+/* ........ COLOR THEME ........ */
+
+
 :root{
   --bg0: #060311;
   --bg1: #0b0620;
@@ -29,7 +31,10 @@ body{
   overflow-x:hidden;
 }
 
-/* ====== Background FX ====== */
+
+/* ........ BACKGROUND FX ........ */
+
+
 .bg{ position:fixed; inset:0; z-index:-2; overflow:hidden; }
 .orb{
   position:absolute;
@@ -72,7 +77,10 @@ body{
   opacity:.25;
 }
 
-/* ====== Top Bar ====== */
+
+/* ........ TOP BAR ........ */
+
+
 .topbar{
   position:sticky; top:0;
   display:flex; align-items:center; justify-content:space-between;
@@ -91,8 +99,8 @@ body{
 .name{ font-weight:700; letter-spacing:.2px; }
 .tag{ font-size:12px; color: var(--muted); }
 
-.nav{ display:flex; gap:10px; }
-button{
+.nav{ display:flex; gap:10px; } 
+button{ /* styling buttons */
   font: inherit;
   color: var(--text);
   border: 1px solid rgba(255,255,255,.14);
@@ -102,7 +110,7 @@ button{
   cursor:pointer;
   transition: transform .15s ease, background .2s ease, border-color .2s ease;
 }
-button:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.22); }
+button:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.22); } /* animation on Hover for Find my FIT button */
 button:active{ transform: translateY(0px) scale(.99); }
 .ghost{ background: rgba(255,255,255,.04); }
 .primary{
@@ -111,60 +119,11 @@ button:active{ transform: translateY(0px) scale(.99); }
   background: linear-gradient(135deg, rgba(139,92,246,.35), rgba(255,79,216,.18));
   box-shadow: 0 12px 34px rgba(139,92,246,.18);
 }
-.primary .spark{
-  position:absolute; inset:-1px;
-  border-radius: inherit;
-  background: radial-gradient(120px 80px at 20% 20%, rgba(255,255,255,.22), transparent 60%),
-              radial-gradient(120px 80px at 80% 80%, rgba(255,255,255,.16), transparent 65%);
-  pointer-events:none;
-  mix-blend-mode: screen;
-}
-.big{ padding: 12px 16px; border-radius: 16px; }
-.full{ width:100%; }
 
-/* ====== Layout ====== */
-.wrap{ max-width: 1120px; margin: 0 auto; padding: 28px 18px 40px; }
-.hero{
-  display:grid;
-  grid-template-columns: 1fr 1.6fr; /* make right column (survey) wider */
-  gap: 18px;
-  align-items:start;
-}
-@media (max-width: 980px){
-  .hero{ grid-template-columns: 1fr; }
-}
 
-.pill{
-  display:inline-flex; align-items:center; gap:10px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.06);
-  backdrop-filter: blur(10px);
-}
-.pill .dot{
-  width:9px; height:9px; border-radius:50%;
-  background: var(--violet);
-  box-shadow: 0 0 18px rgba(139,92,246,.9);
-}
+/* ........ TRANSPARENT CARDS ........ */
 
-h1{
-  margin: 14px 0 8px;
-  font-size: clamp(34px, 4.2vw, 56px);
-  letter-spacing: -0.02em;
-}
-.accent{
-  background: linear-gradient(90deg, var(--violet2), var(--pink));
-  -webkit-background-clip:text;
-  background-clip:text;
-  color: transparent;
-}
-.sub{ margin:0 0 16px; color: var(--muted); font-size: 16px; max-width: 54ch; }
 
-.cta-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
-.arrow{ opacity:.9; margin-left:8px; }
-
-/* ====== Glass Cards ====== */
 .card{
   border-radius: var(--radius);
   border: 1px solid rgba(255,255,255,.14);
@@ -180,21 +139,10 @@ h1{
 .card-head h2{ margin:0; font-size:16px; letter-spacing:.2px; }
 .card-head p{ margin:6px 0 0; color: var(--muted); font-size: 13px; }
 
-/* ====== Form ====== */
-.form{ padding: 14px 16px 16px; display:grid; gap: 12px; }
-.field label{ display:block; font-size: 13px; color: var(--muted); margin:0 0 6px; }
-select{
-  width:100%;
-  padding: 12px 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.14);
-  color: var(--text);
-  background: rgba(0,0,0,.18);
-  outline:none;
-}
-select:focus{ border-color: rgba(167,139,250,.6); box-shadow: 0 0 0 4px rgba(139,92,246,.16); }
 
-/* ====== Terminal ====== */
+/* ........ TERMINAL VISUAL STYLING ........ */
+
+
 .terminal{
   margin-top: 14px;
   border-radius: var(--radius);
@@ -210,26 +158,16 @@ select:focus{ border-color: rgba(167,139,250,.6); box-shadow: 0 0 0 4px rgba(139
   background: rgba(255,255,255,.06);
 }
 .term-dot{ width:10px; height:10px; border-radius:50%; opacity:.9; }
-.red{ background:#ff5f56; } .yellow{ background:#ffbd2e; } .green{ background:#27c93f; }
+.red{ background:#ff5f56; } .yellow{ background:#ffbd2e; } .green{ background:#27c93f; } /* make mac style window dots */
 .term-title{ margin-left:6px; font-size:12px; color: rgba(255,255,255,.72); letter-spacing:.2px; }
 
 .term-body{ padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 .term-line{ font-size: 13.5px; line-height: 1.6; }
-.term-user{ color: rgba(167,139,250,.95); }
-.term-path{ color: rgba(79,247,255,.8); }
-.term-sep{ color: rgba(255,255,255,.55); margin: 0 2px; }
+.term-user{ color: rgba(167,139,250,.95); } /* adjusts color for user visual */
+.term-path{ color: rgba(79,247,255,.8); } /* adjusts color for path visual */
+.term-sep{ color: rgba(255,255,255,.55); margin: 0 2px; } /* adjusts color for separator visual "$" */
 
-.cursor{
-  display:inline-block;
-  width: 9px;
-  height: 1.15em;
-  background: rgba(255,255,255,.85);
-  transform: translateY(2px);
-  margin-left: 2px;
-  animation: blink 1s steps(2, start) infinite;
-}
-@keyframes blink{ 0%,49%{opacity:1} 50%,100%{opacity:0} }
-
+/* Tip: ... */
 .term-hint{
   margin-top: 10px;
   color: rgba(255,255,255,.55);
@@ -244,53 +182,10 @@ kbd{
   background: rgba(255,255,255,.06);
 }
 
-/* ====== Results ====== */
-.results{ margin-top: 12px; }
-.results-body{ padding: 12px 16px 16px; }
-.placeholder{
-  display:flex; align-items:center; gap:10px;
-  color: rgba(255,255,255,.65);
-}
-.pulse{
-  width:10px; height:10px; border-radius:50%;
-  background: var(--violet);
-  box-shadow: 0 0 18px rgba(139,92,246,.75);
-  animation: pulse 1.2s ease-in-out infinite;
-}
-@keyframes pulse{ 0%,100%{transform:scale(.9); opacity:.7} 50%{transform:scale(1.15); opacity:1} }
 
-.grid2{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 10px;
-}
-@media (max-width: 540px){
-  .grid2{ grid-template-columns: 1fr; }
-}
-.block{
-  padding: 12px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.05);
-}
-.block h3{
-  margin:0 0 8px;
-  font-size: 12px;
-  letter-spacing:.25px;
-  color: rgba(255,255,255,.75);
-  text-transform: uppercase;
-}
-.chip{
-  display:inline-flex;
-  padding: 6px 10px;
-  margin: 4px 6px 0 0;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.18);
-  font-size: 12px;
-}
+/* ........ FOOTER ........ */
 
-/* ====== Footer ====== */
+
 .footer{
   margin-top: 26px;
   padding: 18px 2px 0;
@@ -301,25 +196,94 @@ kbd{
 .sep{ opacity:.5; }
 .muted{ opacity:.7; }
 
-/* Horizontal form layout: place question fields across the card width */
-.form.horizontal{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-  align-items:flex-start;
+
+/* ........ HOMEPAGE EDITS ........ */
+
+.pill{ /* Personalized learning + job fit" */
+  display:inline-flex; align-items:center; gap:10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(10px);
 }
-.form.horizontal .field{
-  flex: 0 0 calc(50% - 12px); /* 2 columns */
-  min-width: 260px;
+.pill .dot{
+  width:9px; height:9px; border-radius:50%;
+  background: var(--violet);
+  box-shadow: 0 0 18px rgba(139,92,246,.9);
+}
+
+h1{ /* main info on hompeage "welcome screen" */
+  margin: 14px 0 8px;
+  font-size: clamp(34px, 4.2vw, 56px);
+  letter-spacing: -0.02em;
+}
+.accent{
+  background: linear-gradient(90deg, var(--violet2), var(--pink));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color: transparent;
+}
+.sub{ margin:0 0 16px; color: var(--muted); font-size: 16px; max-width: 54ch; }
+
+/* Find my FIT button */
+.cta-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
+.arrow{ opacity:.9; margin-left:8px; }
+
+/* UI-page centering */
+.ui-page .wrap{
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 28px 18px 40px;
+}
+.ui-page .hero{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  min-height: calc(100vh - 140px);
 }
 @media (max-width: 980px){
-  .form.horizontal .field{ flex: 0 0 100%; }
+  .ui-page .hero{ flex-direction:column; min-height:auto; padding-top:20px; padding-bottom:20px; }
+  .ui-page .wrap{ padding:20px 12px; }
 }
 
-.field.inline{ display:flex; gap:10px; align-items:center; }
-.field.inline label{ min-width: 160px; margin:0; }
+/* Keep footer visible on the UI home page by using a column layout
+- the wrap fills available space and pushes the footer to the bottom */
+.ui-page{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+.ui-page > .topbar{ flex: 0 0 auto; }
+.ui-page > .wrap{
+  flex: 1 1 auto;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between; /* hero + footer spaced to fill viewport */
+}
+.ui-page .hero{ flex: 1 1 auto; min-height: auto; }
+.ui-page .footer{ margin-top: 18px; }
 
-/* ====== Survey-page specific overrides (scoped to avoid affecting other pages) ====== */
+
+/* ........ SURVEY PAGE EDITS ........ */
+
+
+/* Style drop-down */
+.form{ padding: 14px 16px 16px; display:grid; gap: 12px; }
+.field label{ display:block; font-size: 13px; color: var(--muted); margin:0 0 6px; }
+select{
+  width:100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.14);
+  color: var(--text);
+  background: rgba(0,0,0,.18);
+  outline:none;
+}
+select:focus{ border-color: rgba(167,139,250,.6); box-shadow: 0 0 0 4px rgba(139,92,246,.16); }
+
+/* Survey-page specific overrides for shared elements */
 .survey-page .wrap{
   max-width: none;
   width: 100%;
@@ -330,7 +294,7 @@ kbd{
   display: block; /* stack so survey area can expand */
 }
 .survey-page .hero-right .card{
-  width: 40%;
+  width: min(960px, 92%);
   max-width: 1400px;
   margin: 0 auto;
   padding: 18px;
@@ -350,21 +314,36 @@ kbd{
 .survey-page .hero-left h1{ margin-top: 6px; margin-bottom: 6px; }
 .survey-page .hero-left .sub{ margin-left: auto; margin-right: auto; }
 
-/* Make each question label a single horizontal row (centered) and keep answers horizontal beneath */
-.survey-page #questions .field{ display:block; }
-.survey-page #questions .field > label{ display:block; width:100%; text-align:center; }
-.survey-page #questions .field .options{ 
-  margin-top:10px;
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  flex-wrap:nowrap; /* keep options on one row */
-  overflow-x:auto; /* allow horizontal scroll on small screens */
-  padding:6px 0;
-}
-.survey-page #questions .field .options label{ white-space:nowrap; }
+/* Survey page: compact, centered question rows with horizontal option rows */
+.survey-page .form.horizontal,
+.survey-page #questions { display: block; }
 
-/* Bubble styles for likert options (scoped to survey page) */
+.survey-page #questions .field {
+  display: block;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin: 14px 0;
+}
+
+.survey-page #questions .field > label {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.survey-page #questions .field .options {
+  margin-top: 10px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: nowrap; /* keep options on one row */
+  overflow-x: auto; /* allow horizontal scroll on small screens */
+  padding: 6px 0;
+}
+.survey-page #questions .field .options label{ white-space: nowrap; }
+
+/* Bubble styles for likert options on survey page */
 .survey-page .option{ display:inline-flex; align-items:center; gap:10px; padding:6px 8px; border-radius:999px; border:1px solid rgba(255,255,255,.05); background: rgba(255,255,255,.01); }
 .survey-page .option input{ position:absolute; opacity:0; width:0; height:0; pointer-events:none; }
 .survey-page .option .bubble{ width:14px; height:14px; border-radius:50%; border:2px solid rgba(255,255,255,.12); background: transparent; flex:0 0 auto; box-shadow: inset 0 -1px 3px rgba(0,0,0,.18); }
@@ -372,25 +351,10 @@ kbd{
 .survey-page .option input:checked + .bubble{ background: linear-gradient(135deg,var(--violet2),var(--pink)); border-color: var(--violet); box-shadow: 0 6px 18px rgba(139,92,246,.12); }
 .survey-page .option input:focus + .bubble{ outline: 2px solid rgba(167,139,250,.12); }
 
-/* Make the horizontal form stretch and center on the survey page */
-.survey-page .form.horizontal{
-  display: block;
-}
-.survey-page #questions{
-  display: block;
-}
-.survey-page #questions .field{
-  width: 100%;
-  max-width: none;
-  min-width: 0;
-  margin: 14px 0;
-}
-.survey-page .field .options{ justify-content:center; }
-
-/* Make submit button narrower and centered on survey page */
+/* Adjusts width of submit button on survey page */
 .survey-page .primary.full{ width: 360px; margin: 8px auto 0; display: block; }
 
-/* Narrower selects on survey page and centered under labels */
+/* Adjusts size of select bar on survey page */
 .survey-page .field select,
 .survey-page select{
   width: 320px;
