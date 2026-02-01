@@ -154,6 +154,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Q15
     answers.q15 = document.getElementById("q15").value.trim();
+
+    // Save submission locally so results page can preview while backend processes
+    try {
+      localStorage.setItem('surveySubmission', JSON.stringify(answers));
+    } catch (err) {
+      console.warn('Could not save survey locally', err);
+    }
+
+    // Navigate to results page (backend can read submission server-side instead if desired)
+    window.location.href = './results.html';
   });
 
 });
