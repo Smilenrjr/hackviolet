@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>codeFIT — Results</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body class="results-page">
+    <div class="bg" aria-hidden="true">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="grid"></div>
+      <div class="noise"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brandtext">
+          <span class="name"><a href="./ui.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="accent"
+            style="text-decoration: none;">codeFIT</a></span>
+          <span class="tag">HackViolet b    uild</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <div class="page-heading" style="text-align:center; margin-bottom:14px;">
+        <h1>Your FIT Results</h1>
+        <p class="sub">Your first steps to success start here!</p>
+      </div>
+
+      <section class="results-row">
+        <div class="card glass">
+          <div class="card-head"><h3>Fields of Study</h3></div>
+          <div class="card-body">
+            <div id="fields-list" class="card-list">
+              <div class="suggest-option"><span class="bubble"></span><span class="opt-text">field1</span></div>
+              <div class="suggest-option"><span class="bubble"></span><span class="opt-text">field2</span></div>
+              <div class="suggest-option"><span class="bubble"></span><span class="opt-text">field3</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <div class="card-head"><h3>Suggested Roles</h3></div>
+          <div class="card-body">
+            <div id="roles-list" class="card-list">
+              <div class="suggest-option"><span class="bubble"></span><span class="opt-text">role1</span></div>
+              <div class="suggest-option"><span class="bubble"></span><span class="opt-text">role2</span></div>
+              <div class="suggest-option"><span class="bubble"></span><span class="opt-text">role3</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <div class="card-head"><h3>Languages</h3></div>
+          <div class="card-body">
+            <div id="langs-list" class="card-list">
+              <div class="suggest-option"><span class="bubble"></span><span class="opt-text">lang1</span></div>
+              <div class="suggest-option"><span class="bubble"></span><span class="opt-text">lang2</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <div class="card-head"><h3>Frameworks</h3></div>
+          <div class="card-body">
+            <div id="fw-list" class="card-list">
+              <div class="suggest-option"><span class="bubble"></span><span class="opt-text">fw1</span></div>
+              <div class="suggest-option"><span class="bubble"></span><span class="opt-text">fw2</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="overview-section">
+        <div class="overview-card">
+          <div class="card glass">
+            <div class="card-head">
+              <h2>Results Overview</h2>
+              <p>Results may be produced by the backend; client preview shown when available.</p>
+            </div>
+
+            <div class="card-body results-body" id="results-root">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>codeFIT</span>
+        <span class="sep">•</span>
+        <span class="muted">built for <a href="https://main--hackviolet.netlify.app/" target="_blank" rel="noopener noreferrer" class="accent">HackViolet</a></span>
+      </footer>
+    </main>
+
+    <script src="./results.js"></script>
+  </body>
+</html>

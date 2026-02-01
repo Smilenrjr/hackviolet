@@ -268,6 +268,99 @@ h1{ /* main info on hompeage "welcome screen" */
 .ui-page .footer{ margin-top: 18px; }
 
 
+/* ........ RESULTS PAGE EDITS ........ */
+
+
+.results-page .wrap{
+  max-width: none;
+  width: 100%;
+  padding: 28px 22px 40px;
+}
+.results-page .hero{
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 22px;
+  align-items: start;
+  min-height: 46vh;
+}
+.results-page .hero-right .card{
+  width: 100%;
+  margin: 0;
+  padding: 18px;
+  border-radius: 20px;
+}
+
+/* Slightly larger heading for the results overview card */
+.results-page .card-head h2{ font-size: 30px; letter-spacing: .3px; }
+
+@media (max-width: 980px){
+  .results-page .hero{ grid-template-columns: 1fr; }
+  .results-page .results-body{ grid-template-columns: 1fr; }
+}
+
+/* New horizontal row of compact result cards, placed below the hero */
+.results-row{
+  display:flex;
+  gap:16px;
+  margin: 18px 6px 0;
+  align-items: stretch;
+}
+.results-row .card{
+  flex: 1 1 0;
+  min-width: 180px;
+  padding: 12px;
+}
+.results-row .card .card-head h3{ margin:0; font-size:15px; }
+.results-row .card-list{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+
+@media (max-width: 980px){
+  .results-row{ flex-direction:column; }
+}
+
+/* Overview section: center the big results card under the top cards */
+.overview-section{ display:flex; flex-direction:column; align-items:center; gap:18px; margin-top:40px; }
+.overview-heading{ text-align:center; max-width:780px; }
+.overview-card{ width:100%; display:flex; justify-content:center; }
+.overview-card .card{ width: min(920px, 90%); }
+
+/* Match padding of other cards so overview feels consistent */
+.overview-card .card{ padding: 18px; }
+
+@media (max-width: 980px){
+  .overview-card .card{ width: 100%; }
+}
+
+/* Page heading (above the small cards) */
+.page-heading{ text-align:center; }
+.page-heading .sub{ margin:0 auto 16px; max-width:780px; text-align:center; }
+
+/* Ensure footer sits at bottom of viewport on results page */
+.results-page{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+.results-page > .topbar{ flex: 0 0 auto; }
+.results-page > .wrap{
+  flex: 1 1 auto;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+/* Suggestion bubbles */
+.suggest-option{
+  display:inline-flex; align-items:center; gap:8px; padding:6px 10px;
+  border-radius:999px;
+  /* soft gradient pill (low opacity) using the site's accent colors */
+  background: linear-gradient(90deg, rgba(167,139,250,0.30), rgba(255,79,216,0.30));
+  border: 1px solid rgba(255,255,255,0.20);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.50);
+}
+.suggest-option .bubble{ display:none; }
+.suggest-option .opt-text{ display:inline-block; color: var(--text); opacity:.95; font-size:14px; font-weight:600; }
+
+
 /* ........ SURVEY PAGE EDITS ........ */
 
 
