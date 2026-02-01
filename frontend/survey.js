@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const data = await resp.json();
-      statusEl && (statusEl.textContent = `Saved! Response #${data.id}. You can close or adjust answers anytime.`);
+      statusEl && (statusEl.innerHTML = `Saved! Response #${data.id}. <a href="/results.html" style="color:#8b5cf6;">View your recommendations</a>.`);
       statusEl && statusEl.classList.add("success");
 
       form.reset();
