@@ -29,6 +29,7 @@ body{
               radial-gradient(900px 700px at 90% 30%, #1a0a2f 0%, transparent 60%),
               linear-gradient(180deg, var(--bg0), var(--bg1));
   overflow-x:hidden;
+  background-attachment: fixed; /* keep background fixed so it reads continuous while scrolling */
 }
 
 
@@ -67,8 +68,9 @@ body{
     linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
   background-size: 64px 64px;
-  mask-image: radial-gradient(circle at 40% 10%, rgba(0,0,0,.9), transparent 60%);
-  opacity:.25;
+  /* remove the masked vignette so the grid blends continuously */
+  mask-image: none;
+  opacity: .12;
 }
 .noise{
   position:absolute; inset:0;
@@ -87,7 +89,7 @@ body{
   padding: 18px 22px;
   backdrop-filter: blur(14px);
   background: linear-gradient(to bottom, rgba(10,6,22,.75), rgba(10,6,22,.35));
-  border-bottom: 1px solid var(--hair);
+  border-bottom: none; /* remove hard seam */
 }
 .brand{ display:flex; align-items:center; gap:12px; }
 .logo{
@@ -126,16 +128,16 @@ button:active{ transform: translateY(0px) scale(.99); }
 
 .card{
   border-radius: var(--radius);
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.06);
-  box-shadow: var(--shadow);
+  border: none; /* remove hard card edge to blend with background */
+  background: rgba(255,255,255,.04);
+  box-shadow: 0 12px 30px rgba(0,0,0,.45); /* softer shadow */
   overflow:hidden;
 }
 .glass{
   backdrop-filter: blur(14px);
   background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.06));
 }
-.card-head{ padding: 16px 16px 10px; border-bottom: 1px solid rgba(255,255,255,.10); }
+.card-head{ padding: 16px 16px 10px; border-bottom: none; }
 .card-head h2{ margin:0; font-size:16px; letter-spacing:.2px; }
 .card-head p{ margin:6px 0 0; color: var(--muted); font-size: 13px; }
 
@@ -154,8 +156,8 @@ button:active{ transform: translateY(0px) scale(.99); }
 .term-top{
   display:flex; align-items:center; gap:8px;
   padding: 10px 12px;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.06);
+  border-bottom: none;
+  background: rgba(255,255,255,.04);
 }
 .term-dot{ width:10px; height:10px; border-radius:50%; opacity:.9; }
 .red{ background:#ff5f56; } .yellow{ background:#ffbd2e; } .green{ background:#27c93f; } /* make mac style window dots */
@@ -191,7 +193,7 @@ kbd{
   padding: 18px 2px 0;
   color: rgba(255,255,255,.55);
   display:flex; gap:10px; flex-wrap:wrap;
-  border-top: 1px solid rgba(255,255,255,.10);
+  border-top: 1px solid rgba(255,255,255,.06); /* subtle divider */
 }
 .sep{ opacity:.5; }
 .muted{ opacity:.7; }
