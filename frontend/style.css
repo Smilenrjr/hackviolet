@@ -2,35 +2,82 @@
 
 
 :root{
-  --bg0: #060311;
-  --bg1: #0b0620;
+  /* Core */
+  --bg0: #070512;
+  --bg1: #0c0820;
+
   --text: rgba(255,255,255,.92);
   --muted: rgba(255,255,255,.68);
   --hair: rgba(255,255,255,.10);
 
+  /* Neon identity (keep) */
   --violet: #8b5cf6;
   --violet2:#a78bfa;
   --pink: #ff4fd8;
+
+  /* Warm accents (less "all purple") */
+  --ember: #ff3b5c;
+  --ember2:#ff6a3d;
+
+  /* Coffee accents */
+  --espresso:#2a1611;
+  --mocha:   #4a2a1e;
+  --latte:   #caa78a;
+
+  /* Optional cool note (kept subtle) */
   --cyan: #4ff7ff;
 
   --shadow: 0 20px 60px rgba(0,0,0,.45);
   --glass: rgba(255,255,255,.08);
   --glass2: rgba(255,255,255,.12);
   --radius: 18px;
+
+  /* Reusable gradients */
+  --grad-neon: linear-gradient(90deg, var(--violet2), var(--pink));
+  --grad-neon-warm: linear-gradient(90deg, var(--violet2), var(--pink), var(--ember));
+  --grad-ink:
+    radial-gradient(1200px 700px at 50% -10%, rgba(167,139,250,.24), transparent 60%),
+    radial-gradient(900px 600px at 85% 20%, rgba(255,79,216,.18), transparent 55%),
+    radial-gradient(900px 600px at 15% 25%, rgba(255,59,92,.16), transparent 55%),
+    radial-gradient(900px 700px at 50% 120%, rgba(74,42,30,.20), transparent 60%);
 }
 
 *{ box-sizing:border-box; }
-html,body{ height:100%; }
+html,body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  color: var(--text);
+
+  /* One continuous foundation gradient for all pages (prevents "split" bands) */
+  background-color: var(--bg0);
+  background-image:
+    var(--grad-ink),
+    radial-gradient(1200px 800px at 20% 0%, #180a3a 0%, transparent 55%),
+    radial-gradient(900px 700px at 90% 30%, #1a0a2f 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg0), var(--bg1));
+  background-attachment: scroll;
+
+  overflow-x:hidden;
+  overflow-y:auto;
+  -webkit-overflow-scrolling: touch;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior-y: auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  height:100%;
+}
+
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
   color: var(--text);
-  background: radial-gradient(1200px 800px at 20% 0%, #180a3a 0%, transparent 55%),
-              radial-gradient(900px 700px at 90% 30%, #1a0a2f 0%, transparent 60%),
-              linear-gradient(180deg, var(--bg0), var(--bg1));
-  overflow-x:hidden;
-  background-attachment: fixed; /* keep background fixed so it reads continuous while scrolling */
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  /* Let html handle the foundation gradient so it never "ends" mid-scroll */
+  background: transparent;
 }
+
 
 
 /* ........ BACKGROUND FX ........ */
@@ -48,15 +95,20 @@ body{
 }
 .orb1{
   left:-140px; top:-120px;
-  background: radial-gradient(circle at 30% 30%, var(--violet2), transparent 60%),
-              radial-gradient(circle at 70% 70%, var(--pink), transparent 55%);
+  background:
+    radial-gradient(circle at 30% 30%, var(--violet2), transparent 60%),
+    radial-gradient(circle at 70% 70%, var(--pink), transparent 55%),
+    radial-gradient(circle at 55% 45%, rgba(255,59,92,.35), transparent 62%);
 }
 .orb2{
   right:-180px; bottom:-200px;
   width:640px; height:640px;
   animation-duration: 16s;
-  background: radial-gradient(circle at 30% 30%, #5b21b6, transparent 60%),
-              radial-gradient(circle at 70% 70%, var(--cyan), transparent 55%);
+  background:
+    radial-gradient(circle at 30% 30%, #5b21b6, transparent 60%),
+    radial-gradient(circle at 70% 70%, rgba(255,79,216,.55), transparent 55%),
+    radial-gradient(circle at 35% 75%, rgba(74,42,30,.55), transparent 58%),
+    radial-gradient(circle at 80% 25%, rgba(255,59,92,.35), transparent 62%);
 }
 @keyframes float{
   0%,100%{ transform: translate(0,0) scale(1); }
@@ -163,8 +215,8 @@ button:active{ transform: translateY(0px) scale(.99); }
 .red{ background:#ff5f56; } .yellow{ background:#ffbd2e; } .green{ background:#27c93f; } /* make mac style window dots */
 .term-title{ margin-left:6px; font-size:12px; color: rgba(255,255,255,.72); letter-spacing:.2px; }
 
-.term-body{ padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-.term-line{ font-size: 13.5px; line-height: 1.6; }
+.term-body{ overflow-x:auto;  padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+.term-line{ font-size: 13.5px; line-height: 1.6; white-space: nowrap; min-width: 69ch; }
 .term-user{ color: rgba(167,139,250,.95); } /* adjusts color for user visual */
 .term-path{ color: rgba(79,247,255,.8); } /* adjusts color for path visual */
 .term-sep{ color: rgba(255,255,255,.55); margin: 0 2px; } /* adjusts color for separator visual "$" */
@@ -221,7 +273,7 @@ h1{ /* main info on hompeage "welcome screen" */
   letter-spacing: -0.02em;
 }
 .accent{
-  background: linear-gradient(90deg, var(--violet2), var(--pink));
+  background: var(--grad-neon-warm);
   -webkit-background-clip:text;
   background-clip:text;
   color: transparent;
@@ -274,16 +326,7 @@ h1{ /* main info on hompeage "welcome screen" */
 /* Style drop-down */
 .form{ padding: 14px 16px 16px; display:grid; gap: 12px; }
 .field label{ display:block; font-size: 13px; color: var(--muted); margin:0 0 6px; }
-select{
-  width:100%;
-  padding: 12px 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.14);
-  color: var(--text);
-  background: rgba(0,0,0,.18);
-  outline:none;
-}
-select:focus{ border-color: rgba(167,139,250,.6); box-shadow: 0 0 0 4px rgba(139,92,246,.16); }
+select{ width:100%; }
 
 /* Survey-page specific overrides for shared elements */
 .survey-page .wrap{
@@ -363,4 +406,273 @@ select:focus{ border-color: rgba(167,139,250,.6); box-shadow: 0 0 0 4px rgba(139
   max-width: 90%;
   display: block;
   margin: 6px auto 0;
+}
+
+
+/* ........ GLOBAL FORM CONTROLS (match theme) ........ */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select{
+  font: inherit;
+}
+
+.control{
+  width:100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.14);
+  color: var(--text);
+  background: rgba(0,0,0,.18);
+  outline:none;
+  box-shadow: none;
+}
+
+.control::placeholder{ color: rgba(255,255,255,.55); }
+.control:focus{
+  border-color: rgba(167,139,250,.65);
+  box-shadow: 0 0 0 4px rgba(139,92,246,.16);
+}
+
+/* Make selects visually consistent with inputs */
+select.control{
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255,255,255,.75) 50%),
+    linear-gradient(135deg, rgba(255,255,255,.75) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 34px;
+}
+
+/* Textareas should feel like the rest of the glass UI */
+textarea.control{
+  resize: vertical;
+  min-height: 110px;
+}
+
+/* Smaller helper / error text */
+.help{
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: rgba(255,255,255,.62);
+}
+.error{
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: rgba(255,79,216,.92);
+}
+
+/* ........ MODAL (login / signup) ........ */
+
+.modal{
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 18px;
+}
+.modal.open{ display:flex; }
+
+.modal-overlay{
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(8px);
+}
+
+.modal-dialog{
+  position: relative;
+  width: min(520px, 92vw);
+  border-radius: calc(var(--radius) + 6px);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 14px 16px;
+  background: rgba(255,255,255,.04);
+}
+.modal-title{
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+.icon-btn{
+  width: 40px;
+  height: 40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.04);
+  padding: 0;
+  font-size: 18px;
+  line-height: 1;
+  transform: translateY(-.5px);
+}
+.icon-btn:hover{ border-color: rgba(255,255,255,.22); }
+
+.modal-body{ padding: 16px; display:grid; gap: 12px; }
+
+.auth-row{
+  display:flex;
+  gap:10px;
+  justify-content:space-between;
+  align-items:center;
+  margin-top: 2px;
+  flex-wrap: wrap;
+}
+.auth-link{
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: rgba(167,139,250,.95);
+  cursor:pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.auth-link:hover{ color: rgba(255,79,216,.95); }
+
+.auth-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top: 6px; }
+.auth-actions .primary{ width: 100%; }
+
+/* ........ SCROLLBAR (ChatGPT-like: subtle, full height) ........ */
+
+/* Firefox */
+*{
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.22) transparent;
+}
+
+/* WebKit (Chrome/Edge/Safari) */
+::-webkit-scrollbar{ width: 10px; height: 10px; }
+::-webkit-scrollbar-track{ background: transparent; }
+::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.18);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover{ background: rgba(255,255,255,.26); }
+
+/* ........ LANDING PAGE CENTERING ........ */
+
+.ui-page .hero-solo{
+  text-align: center;
+}
+.ui-page .hero-solo .hero-left{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.ui-page .hero-solo .cta-row{ justify-content:center; }
+.ui-page .hero-solo .sub{ text-align:center; }
+
+
+/* Logo image (star) */
+.logo-img{
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display:block;
+  background: transparent;
+  filter:
+    drop-shadow(0 0 6px rgba(139,92,246,.45))
+    drop-shadow(0 0 12px rgba(255,79,216,.25))
+    drop-shadow(0 0 10px rgba(255,59,92,.18));
+}
+
+/* Native select dropdown menu (best-effort across browsers) */
+select.control{
+  background-color: rgba(0,0,0,.28);
+  color: var(--text);
+}
+select.control option,
+select.control optgroup{
+  background-color: #0f0b1f;
+  color: rgba(255,255,255,.95);
+}
+
+/* Subtle warm highlight so the UI feels less "template purple" */
+.card.glass{
+  position: relative;
+}
+.card.glass::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(202,167,138,.14);
+}
+.card.glass::after{
+  content:"";
+  position:absolute;
+  left: 18px;
+  right: 18px;
+  top: 0;
+  height: 2px;
+  border-radius: 999px;
+  pointer-events:none;
+  background: linear-gradient(90deg,
+    rgba(202,167,138,0),
+    rgba(202,167,138,.22),
+    rgba(255,59,92,.16),
+    rgba(202,167,138,0));
+  opacity: .9;
+}
+
+/* Center footer content on landing page */
+.ui-page .footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.term-line{
+  display: flex;
+  align-items: center;
+  gap: 0;              /* <-- no gap */
+}
+
+/* prompt stays fixed, no extra spacing */
+.term-prefix{
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* typed text starts immediately after the prompt */
+.term-dynamic{
+  flex: 0 1 auto;      /* <-- don't stretch across the line */
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-left: 0;      /* <-- ensure no offset */
+}
+
+/* Terminal block cursor (like cmd) */
+.cursor{
+  display: inline-block;
+  width: 0.6ch;
+  height: 1.05em;
+  margin-left: 0.15ch;
+  background: rgba(255,255,255,0.85);
+  vertical-align: -0.15em;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink{
+  50%{ opacity: 0; }
 }

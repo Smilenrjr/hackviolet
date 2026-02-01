@@ -7,14 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
   q1.className = "field";
   q1.innerHTML = `
     <label for="q1">1) Do you have prior programming experience?</label>
-    <select id="q1" required>
+    <select id="q1" class="control" required>
       <option value="">Choose...</option>
       <option value="yes">Yes</option>
       <option value="no">No</option>
     </select>
     <div id="q1-follow" style="margin-top:8px; display:none;">
       <label for="q1-langs">If yes, which language are you most comfortable with?</label>
-      <select id="q1-langs">
+      <select id="q1-langs" class="control">
         <option value="">Choose...</option>
         <option value="js">JavaScript / TypeScript</option>
         <option value="py">Python</option>
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <option value="rs">Rust / Go</option>
         <option value="other">Other</option>
       </select>
-      <input id="q1-langs-other" type="text" placeholder="Please specify..." style="display:none; margin-top:8px; width:100%; padding:8px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,0.98); color:#000;" />
+      <input id="q1-langs-other" class="control" type="text" placeholder="Please specify..." style="display:none; margin-top:8px;" />
     </div>
   `;
   questionsContainer.appendChild(q1);
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
   q15.className = "field";
   q15.innerHTML = `
     <label for="q15">15) Anything else you'd like us to know?</label>
-    <textarea id="q15" rows="5" placeholder="List any other interests/preferences you have about your programming journey. Also list any prior experience if applicable." style="width:100%; padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.14); color:inherit;"></textarea>
+    <textarea id="q15" class="control" rows="5" placeholder="List any other interests/preferences you have about your programming journey. Also list any prior experience if applicable."></textarea>
   `;
   questionsContainer.appendChild(q15);
 
@@ -85,6 +85,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target.value === "yes") {
       q1Follow.style.display = "block";
       document.getElementById("q1-langs").setAttribute("required", "required");
+      // If "Other" is already selected, reveal the input
+      const langSel = document.getElementById("q1-langs");
+      if (langSel && langSel.value === "other") {
+        const otherInput = document.getElementById("q1-langs-other");
+        if (otherInput) {
+          otherInput.style.display = "block";
+          otherInput.setAttribute("required", "required");
+        }
+      }
     } else {
       q1Follow.style.display = "none";
       document.getElementById("q1-langs").removeAttribute("required");
@@ -97,30 +106,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Make dropdown text black and background light for readability
-  q1Select.style.color = '#000';
-  q1Select.style.background = '#fff';
-  q1Select.style.borderColor = '#ccc';
 
-  const q1LangsSelect = document.getElementById('q1-langs');
-  if (q1LangsSelect) {
-    q1LangsSelect.style.color = '#000';
-    q1LangsSelect.style.background = '#fff';
-    q1LangsSelect.style.borderColor = '#ccc';
+  // Show/hide "Other" text input for language dropdown
+  const q1LangSelect = document.getElementById("q1-langs");
+  const q1LangOtherInput = document.getElementById("q1-langs-other");
 
-    // show text input when user selects 'Other'
-    const otherInput = document.getElementById('q1-langs-other');
-    q1LangsSelect.addEventListener('change', (ev) => {
-      if (ev.target.value === 'other') {
-        otherInput.style.display = 'block';
-        otherInput.setAttribute('required', 'required');
-        otherInput.focus();
-      } else {
-        otherInput.style.display = 'none';
-        otherInput.removeAttribute('required');
-      }
-    });
-  }
+  q1LangSelect?.addEventListener("change", (e) => {
+    const val = e.target.value;
+    if (!q1LangOtherInput) return;
+
+    if (val === "other") {
+      q1LangOtherInput.style.display = "block";
+      q1LangOtherInput.setAttribute("required", "required");
+      q1LangOtherInput.focus();
+    } else {
+      q1LangOtherInput.style.display = "none";
+      q1LangOtherInput.removeAttribute("required");
+      q1LangOtherInput.value = "";
+    }
+  });
 
   // Submit handler: collect responses and render a simple summary
   const form = document.getElementById("surveyForm");

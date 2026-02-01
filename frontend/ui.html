@@ -18,7 +18,7 @@
 
     <header class="topbar">
       <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
+        <img src="./star.png" class="logo-img" alt="codeFIT logo">
         <div class="brandtext">
           <span class="name accent">codeFIT</span>
           <span class="tag">HackViolet build</span>
@@ -36,10 +36,7 @@
     <main class="wrap">
       <section class="hero hero-solo">
         <div class="hero-left">
-          <div class="pill">
-            <span class="dot"></span>
-            Personalized learning + job fit
-          </div>
+          
 
           <h1>
             Build your <span class="accent">perfect</span> programming path.
@@ -61,9 +58,14 @@
 
             <div class="term-body">
               <div class="term-line">
-                <span class="term-user">user@codefit</span><span class="term-sep">:</span
-                ><span class="term-path">~</span><span class="term-sep">$</span>
-                <span id="typed"></span><span class="cursor" aria-hidden="true"></span>
+                <div class="term-prefix" aria-hidden="true">
+                  <span class="term-user">user@codefit</span><span class="term-sep">:</span
+                  ><span class="term-path">~</span><span class="term-sep">$</span>
+                </div>
+
+                <div class="term-dynamic">
+                  <span id="typed"></span><span class="cursor" aria-hidden="true"></span>
+                </div>
               </div>
 
               <div class="term-hint">Tip: tap “Find my FIT” to begin.</div>
@@ -97,6 +99,82 @@
         </span>
       </footer>
     </main>
+
+
+    <!-- Auth modal -->
+    <div id="authModal" class="modal" aria-hidden="true">
+      <div class="modal-overlay" data-close="true"></div>
+
+      <div class="modal-dialog card glass" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+        <div class="modal-head">
+          <div id="authTitle" class="modal-title">Login</div>
+          <button class="icon-btn" type="button" aria-label="Close" data-close="true">✕</button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Login view -->
+          <form id="loginForm" autocomplete="off" novalidate>
+            <div class="field">
+              <label for="loginEmail">Email</label>
+              <input id="loginEmail" class="control" type="email" placeholder="you@example.com" autocomplete="off" />
+            </div>
+
+            <div class="field">
+              <label for="loginPassword">Password</label>
+              <input id="loginPassword" class="control" type="password" placeholder="••••••••" autocomplete="off" />
+            </div>
+
+            <div id="loginError" class="error" style="display:none;"></div>
+
+            <div class="auth-row">
+              <button class="auth-link" type="button">
+                Forgot password?
+              </button>
+              <button id="toSignup" class="auth-link" type="button">New? Create account</button>
+            </div>
+
+            <div class="auth-actions">
+              <button class="primary" type="submit">Login</button>
+            </div>
+          </form>
+
+          <!-- Signup view -->
+          <form id="signupForm" autocomplete="off" novalidate style="display:none;">
+            <div class="field">
+              <label for="signupEmail">Email</label>
+              <input id="signupEmail" class="control" type="email" placeholder="you@example.com" autocomplete="off" />
+            </div>
+
+            <div class="field">
+              <label for="signupEmail2">Confirm email</label>
+              <input id="signupEmail2" class="control" type="email" placeholder="you@example.com" autocomplete="off" />
+            </div>
+
+            <div class="field">
+              <label for="signupPassword">Password</label>
+              <input id="signupPassword" class="control" type="password" placeholder="Strong password" autocomplete="off" />
+              <div class="help">8+ chars, upper + lower, number, special character.</div>
+            </div>
+
+            <div class="field">
+              <label for="signupPassword2">Confirm password</label>
+              <input id="signupPassword2" class="control" type="password" placeholder="Repeat password" autocomplete="off" />
+            </div>
+
+            <div id="signupError" class="error" style="display:none;"></div>
+
+            <div class="auth-row">
+              <button id="toLogin" class="auth-link" type="button">Already have an account? Login</button>
+            </div>
+
+            <div class="auth-actions">
+              <button class="primary" type="submit">Create account</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
 
     <script src="./ui.js"></script>
   </body>
