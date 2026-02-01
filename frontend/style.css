@@ -1,13 +1,14 @@
 /* ........ COLOR THEME ........ */
 
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;500;600;700&display=swap");
 
 :root{
   /* Core */
   --bg0: #070512;
-  --bg1: #0c0820;
+  --bg1: #120c26;
 
-  --text: rgba(255,255,255,.92);
-  --muted: rgba(255,255,255,.68);
+  --text: rgba(255,255,255,.94);
+  --muted: rgba(255,255,255,.70);
   --hair: rgba(255,255,255,.10);
 
   /* Neon identity (keep) */
@@ -27,25 +28,30 @@
   /* Optional cool note (kept subtle) */
   --cyan: #4ff7ff;
 
-  --shadow: 0 20px 60px rgba(0,0,0,.45);
+  --shadow: 0 24px 70px rgba(0,0,0,.52);
   --glass: rgba(255,255,255,.08);
   --glass2: rgba(255,255,255,.12);
-  --radius: 18px;
+  --radius: 20px;
+  --topbar-h: 72px;
 
   /* Reusable gradients */
   --grad-neon: linear-gradient(90deg, var(--violet2), var(--pink));
   --grad-neon-warm: linear-gradient(90deg, var(--violet2), var(--pink), var(--ember));
   --grad-ink:
-    radial-gradient(1200px 700px at 50% -10%, rgba(167,139,250,.24), transparent 60%),
-    radial-gradient(900px 600px at 85% 20%, rgba(255,79,216,.18), transparent 55%),
-    radial-gradient(900px 600px at 15% 25%, rgba(255,59,92,.16), transparent 55%),
-    radial-gradient(900px 700px at 50% 120%, rgba(74,42,30,.20), transparent 60%);
+    radial-gradient(1200px 700px at 50% -10%, rgba(167,139,250,.26), transparent 60%),
+    radial-gradient(900px 600px at 88% 18%, rgba(255,79,216,.20), transparent 55%),
+    radial-gradient(900px 600px at 15% 25%, rgba(255,59,92,.18), transparent 55%),
+    radial-gradient(900px 700px at 50% 120%, rgba(74,42,30,.24), transparent 60%);
+
+  /* Typography */
+  --font-sans: "Sora", "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 *{ box-sizing:border-box; }
 html,body{
   margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  font-family: var(--font-sans);
   color: var(--text);
 
   /* One continuous foundation gradient for all pages (prevents "split" bands) */
@@ -61,7 +67,7 @@ html,body{
   overflow-y:auto;
   -webkit-overflow-scrolling: touch;
   -webkit-text-size-adjust: 100%;
-  overscroll-behavior-y: auto;
+  overscroll-behavior-y: none;
   min-height: 100vh;
   min-height: 100dvh;
   height:100%;
@@ -69,7 +75,7 @@ html,body{
 
 body{
   margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  font-family: var(--font-sans);
   color: var(--text);
   min-height: 100vh;
   min-height: 100dvh;
@@ -86,9 +92,9 @@ body{
 .bg{ position:fixed; inset:0; z-index:-2; overflow:hidden; }
 .orb{
   position:absolute;
-  width:520px; height:520px;
+  width:540px; height:540px;
   filter: blur(30px);
-  opacity:.55;
+  opacity:.60;
   border-radius:50%;
   transform: translateZ(0);
   animation: float 12s ease-in-out infinite;
@@ -102,7 +108,7 @@ body{
 }
 .orb2{
   right:-180px; bottom:-200px;
-  width:640px; height:640px;
+  width:700px; height:700px;
   animation-duration: 16s;
   background:
     radial-gradient(circle at 30% 30%, #5b21b6, transparent 60%),
@@ -136,14 +142,28 @@ body{
 
 
 .topbar{
-  position:sticky; top:0;
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index: 20;
   display:flex; align-items:center; justify-content:space-between;
   padding: 18px 22px;
   backdrop-filter: blur(14px);
-  background: linear-gradient(to bottom, rgba(10,6,22,.75), rgba(10,6,22,.35));
+  background: linear-gradient(to bottom, rgba(6,3,16,.95), rgba(8,5,18,.65));
   border-bottom: none; /* remove hard seam */
+  box-shadow: 0 12px 34px rgba(4,2,10,.55);
 }
 .brand{ display:flex; align-items:center; gap:12px; }
+.brand-link{
+  text-decoration: none;
+  color: inherit;
+}
+.brand-link:focus-visible{
+  outline: 2px solid rgba(167,139,250,.45);
+  outline-offset: 6px;
+  border-radius: 14px;
+}
 .logo{
   width:14px; height:14px; border-radius:50%;
   background: radial-gradient(circle at 30% 30%, #fff, var(--violet) 35%, rgba(255,255,255,0) 70%);
@@ -157,7 +177,7 @@ body{
 button{ /* styling buttons */
   font: inherit;
   color: var(--text);
-  border: 1px solid rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.16);
   background: rgba(255,255,255,.06);
   padding: 10px 14px;
   border-radius: 14px;
@@ -169,9 +189,9 @@ button:active{ transform: translateY(0px) scale(.99); }
 .ghost{ background: rgba(255,255,255,.04); }
 .primary{
   position:relative;
-  border-color: rgba(139,92,246,.45);
-  background: linear-gradient(135deg, rgba(139,92,246,.35), rgba(255,79,216,.18));
-  box-shadow: 0 12px 34px rgba(139,92,246,.18);
+  border-color: rgba(139,92,246,.55);
+  background: linear-gradient(135deg, rgba(139,92,246,.40), rgba(255,79,216,.25), rgba(255,59,92,.18));
+  box-shadow: 0 14px 36px rgba(139,92,246,.22);
 }
 
 
@@ -181,13 +201,13 @@ button:active{ transform: translateY(0px) scale(.99); }
 .card{
   border-radius: var(--radius);
   border: none; /* remove hard card edge to blend with background */
-  background: rgba(255,255,255,.04);
+  background: rgba(255,255,255,.05);
   box-shadow: 0 12px 30px rgba(0,0,0,.45); /* softer shadow */
   overflow:hidden;
 }
 .glass{
   backdrop-filter: blur(14px);
-  background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.06));
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
 }
 .card-head{ padding: 16px 16px 10px; border-bottom: none; }
 .card-head h2{ margin:0; font-size:16px; letter-spacing:.2px; }
@@ -200,9 +220,9 @@ button:active{ transform: translateY(0px) scale(.99); }
 .terminal{
   margin-top: 14px;
   border-radius: var(--radius);
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(0,0,0,.28);
-  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(0,0,0,.32);
+  box-shadow: 0 20px 54px rgba(0,0,0,.38);
   overflow:hidden;
 }
 .term-top{
@@ -215,7 +235,7 @@ button:active{ transform: translateY(0px) scale(.99); }
 .red{ background:#ff5f56; } .yellow{ background:#ffbd2e; } .green{ background:#27c93f; } /* make mac style window dots */
 .term-title{ margin-left:6px; font-size:12px; color: rgba(255,255,255,.72); letter-spacing:.2px; }
 
-.term-body{ overflow-x:auto;  padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+.term-body{ overflow-x:auto;  padding: 12px; font-family: var(--font-mono); }
 .term-line{ font-size: 13.5px; line-height: 1.6; white-space: nowrap; min-width: 69ch; }
 .term-user{ color: rgba(167,139,250,.95); } /* adjusts color for user visual */
 .term-path{ color: rgba(79,247,255,.8); } /* adjusts color for path visual */
@@ -269,8 +289,9 @@ kbd{
 
 h1{ /* main info on hompeage "welcome screen" */
   margin: 14px 0 8px;
-  font-size: clamp(34px, 4.2vw, 56px);
+  font-size: clamp(36px, 4.6vw, 60px);
   letter-spacing: -0.02em;
+  line-height: 1.05;
 }
 .accent{
   background: var(--grad-neon-warm);
@@ -278,7 +299,7 @@ h1{ /* main info on hompeage "welcome screen" */
   background-clip:text;
   color: transparent;
 }
-.sub{ margin:0 0 16px; color: var(--muted); font-size: 16px; max-width: 54ch; }
+.sub{ margin:0 0 16px; color: var(--muted); font-size: 17px; max-width: 58ch; }
 
 /* Find my FIT button */
 .cta-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
@@ -288,7 +309,7 @@ h1{ /* main info on hompeage "welcome screen" */
 .ui-page .wrap{
   max-width: 920px;
   margin: 0 auto;
-  padding: 28px 18px 40px;
+  padding: calc(28px + var(--topbar-h)) 18px 40px;
 }
 .ui-page .hero{
   display:flex;
@@ -326,7 +347,7 @@ h1{ /* main info on hompeage "welcome screen" */
 .results-page .wrap{
   max-width: none;
   width: 100%;
-  padding: 28px 22px 40px;
+  padding: calc(28px + var(--topbar-h)) 22px 40px;
 }
 .results-page .hero{
   display: grid;
@@ -426,7 +447,7 @@ select{ width:100%; }
   max-width: none;
   width: 100%;
   margin: 0;
-  padding: 28px 18px 40px;
+  padding: calc(28px + var(--topbar-h)) 18px 40px;
 }
 .survey-page .hero{
   display: block; /* stack so survey area can expand */
@@ -435,7 +456,7 @@ select{ width:100%; }
   width: min(960px, 92%);
   max-width: 1400px;
   margin: 0 auto;
-  padding: 18px;
+  padding: 22px;
 }
 .survey-page .field label{ font-size: 16px; text-align: center; }
 
@@ -461,7 +482,7 @@ select{ width:100%; }
   width: 100%;
   max-width: none;
   min-width: 0;
-  margin: 14px 0;
+  margin: 18px 0;
 }
 
 .survey-page #questions .field > label {
@@ -494,7 +515,7 @@ select{ width:100%; }
 .survey-page #questions .field .options {
   margin-top: 10px;
   display: flex;
-  gap: 12px;
+  gap: 10px;
   justify-content: center;
   flex-wrap: nowrap; /* keep options on one row */
   overflow-x: auto; /* allow horizontal scroll on small screens */
@@ -503,11 +524,36 @@ select{ width:100%; }
 .survey-page #questions .field .options label{ white-space: nowrap; }
 
 /* Bubble styles for likert options on survey page */
-.survey-page .option{ display:inline-flex; align-items:center; gap:10px; padding:6px 8px; border-radius:999px; border:1px solid rgba(255,255,255,.05); background: rgba(255,255,255,.01); }
+.survey-page .option{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  transition: border-color .2s ease, background .2s ease, transform .15s ease;
+}
 .survey-page .option input{ position:absolute; opacity:0; width:0; height:0; pointer-events:none; }
-.survey-page .option .bubble{ width:14px; height:14px; border-radius:50%; border:2px solid rgba(255,255,255,.12); background: transparent; flex:0 0 auto; box-shadow: inset 0 -1px 3px rgba(0,0,0,.18); }
+.survey-page .option .bubble{
+  width:14px; height:14px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.16);
+  background: transparent;
+  flex:0 0 auto;
+  box-shadow: inset 0 -1px 3px rgba(0,0,0,.18);
+}
 .survey-page .option .opt-text{ display:inline-block; }
-.survey-page .option input:checked + .bubble{ background: linear-gradient(135deg,var(--violet2),var(--pink)); border-color: var(--violet); box-shadow: 0 6px 18px rgba(139,92,246,.12); }
+.survey-page .option input:checked + .bubble{
+  background: linear-gradient(135deg,var(--violet2),var(--pink));
+  border-color: var(--violet);
+  box-shadow: 0 6px 18px rgba(139,92,246,.12);
+}
+.survey-page .option:has(input:checked){
+  border-color: rgba(139,92,246,.45);
+  background: rgba(139,92,246,.10);
+  transform: translateY(-1px);
+}
 .survey-page .option input:focus + .bubble{ outline: 2px solid rgba(167,139,250,.12); }
 
 /* Adjusts width of submit button on survey page */
@@ -537,7 +583,7 @@ select{
   width:100%;
   padding: 12px 14px;
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.16);
   color: var(--text);
   background: rgba(0,0,0,.18);
   outline:none;
@@ -605,7 +651,7 @@ textarea.control{
 .modal-dialog{
   position: relative;
   width: min(520px, 92vw);
-  border-radius: calc(var(--radius) + 6px);
+  border-radius: calc(var(--radius) + 8px);
   box-shadow: var(--shadow);
   overflow:hidden;
 }
@@ -696,15 +742,15 @@ textarea.control{
 
 /* Logo image (star) */
 .logo-img{
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
   display:block;
   background: transparent;
   filter:
-    drop-shadow(0 0 6px rgba(139,92,246,.45))
-    drop-shadow(0 0 12px rgba(255,79,216,.25))
-    drop-shadow(0 0 10px rgba(255,59,92,.18));
+    drop-shadow(0 0 10px rgba(139,92,246,.85))
+    drop-shadow(0 0 20px rgba(255,79,216,.55))
+    drop-shadow(0 0 18px rgba(255,59,92,.40));
 }
 
 /* Native select dropdown menu (best-effort across browsers) */
