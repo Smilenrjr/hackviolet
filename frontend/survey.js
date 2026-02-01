@@ -81,6 +81,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // Show/hide follow-up for Q1
   const q1Select = document.getElementById("q1");
   const q1Follow = document.getElementById("q1-follow");
+  const statusEl = resultsEl || document.getElementById("status");
+  const langLabels = {
+    js: "JavaScript / TypeScript",
+    py: "Python",
+    c: "C / C++",
+    cs: "C# / Unity",
+    rs: "Rust / Go",
+    other: "Other",
+  };
   q1Select.addEventListener("change", (e) => {
     if (e.target.value === "yes") {
       q1Follow.style.display = "block";
@@ -128,21 +137,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Submit handler: collect responses and render a simple summary
   const form = document.getElementById("surveyForm");
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const answers = {};
 
     // Q1
     answers.q1 = q1Select.value || null;
+    if (!answers.q1) {
+      statusEl && statusEl.classList.remove("error", "success");
+      statusEl && (statusEl.textContent = "Please answer question 1.");
+      statusEl && statusEl.classList.add("error");
+      return;
+    }
     if (answers.q1 === "yes") {
       const q1LangEl = document.getElementById('q1-langs');
       const q1LangOther = document.getElementById('q1-langs-other');
       const val = q1LangEl ? q1LangEl.value : null;
       if (val === 'other') {
-        answers.q1_follow = q1LangOther && q1LangOther.value.trim() ? q1LangOther.value.trim() : null;
-      } else {
-        answers.q1_follow = val || null;
+        const otherVal = q1LangOther && q1LangOther.value.trim();
+        answers.q1_follow = otherVal || null;
+      } else if (val) {
+        answers.q1_follow = langLabels[val] || val;
       }
+      if (!answers.q1_follow) {
+        statusEl && (statusEl.textContent = "Please select or enter your primary language.");
+        statusEl && statusEl.classList.add("error");
+        return;
+      }
+    } else {
+      answers.q1_follow = null;
     }
 
     // Q2-14
@@ -150,20 +173,51 @@ document.addEventListener("DOMContentLoaded", () => {
       const name = `q${i}`;
       const val = form.querySelector(`input[name=${name}]:checked`);
       answers[name] = val ? val.value : null;
+      if (!answers[name]) {
+        statusEl && (statusEl.textContent = "Please answer all questions before submitting.");
+        statusEl && statusEl.classList.add("error");
+        return;
+      }
     }
 
     // Q15
-    answers.q15 = document.getElementById("q15").value.trim();
+    const q15Val = document.getElementById("q15").value.trim();
+    answers.q15 = q15Val.length ? q15Val : null;
 
-    // Save submission locally so results page can preview while backend processes
     try {
-      localStorage.setItem('surveySubmission', JSON.stringify(answers));
-    } catch (err) {
-      console.warn('Could not save survey locally', err);
-    }
+      statusEl && statusEl.classList.remove("error", "success");
+      statusEl && (statusEl.textContent = "Saving your survey...");
 
-    // Navigate to results page (backend can read submission server-side instead if desired)
-    window.location.href = './results.html';
+      const resp = await fetch("/api/surveys", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(answers),
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        const msg = err?.error || "Unable to save right now.";
+        statusEl && (statusEl.textContent = msg);
+        statusEl && statusEl.classList.add("error");
+        return;
+      }
+
+      const data = await resp.json();
+      statusEl && (statusEl.textContent = `Saved! Response #${data.id}. You can close or adjust answers anytime.`);
+      statusEl && statusEl.classList.add("success");
+
+      form.reset();
+      q1Follow.style.display = "none";
+      const otherInput = document.getElementById("q1-langs-other");
+      if (otherInput) {
+        otherInput.style.display = "none";
+        otherInput.removeAttribute("required");
+      }
+    } catch (err) {
+      console.error(err);
+      statusEl && (statusEl.textContent = "Network error—please try again.");
+      statusEl && statusEl.classList.add("error");
+    }
   });
 
 });
