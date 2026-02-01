@@ -199,6 +199,96 @@ app.get("/api/survey/export", (_req, res) => {
   );
 });
 
+// NDJSON export: one response per line, minimal keys
+app.get("/api/survey/ndjson", (req, res) => {
+  const limit = Math.min(Number(req.query.limit) || 500, 2000);
+  db.all(
+    `SELECT id, created_at, raw_json FROM survey_responses ORDER BY id DESC LIMIT ?`,
+    [limit],
+    (err, rows) => {
+      if (err) {
+        console.error("DB ndjson export error", err);
+        return res.status(500).json({ error: "DB read failed" });
+      }
+      res.type("application/x-ndjson");
+      const lines = rows.map((r) => {
+        const a = r.raw_json ? JSON.parse(r.raw_json) : {};
+        return JSON.stringify({
+          id: r.id,
+          t: r.created_at,
+          q1: a.q1 ?? null,
+          lang: a.q1_follow ?? null,
+          lk: [
+            a.q2,
+            a.q3,
+            a.q4,
+            a.q5,
+            a.q6,
+            a.q7,
+            a.q8,
+            a.q9,
+            a.q10,
+            a.q11,
+            a.q12,
+            a.q13,
+            a.q14,
+          ],
+          note: a.q15 ?? null,
+        });
+      });
+      res.send(lines.join("\n"));
+    }
+  );
+});
+
+// Compact export: minimal keys to save tokens; optionally NDJSON via ?format=ndjson
+app.get("/api/surveys/compact", (req, res) => {
+  const limit = Math.min(Number(req.query.limit) || 200, 1000);
+  const format = (req.query.format || "").toLowerCase();
+  db.all(
+    `SELECT id, created_at, raw_json FROM survey_responses ORDER BY id DESC LIMIT ?`,
+    [limit],
+    (err, rows) => {
+      if (err) {
+        console.error("DB compact export error", err);
+        return res.status(500).json({ error: "DB read failed" });
+      }
+      const data = rows.map((r) => {
+        const a = r.raw_json ? JSON.parse(r.raw_json) : {};
+        return {
+          id: r.id,
+          t: r.created_at,
+          q1: a.q1 ?? null,
+          lang: a.q1_follow ?? null,
+          lk: [
+            a.q2,
+            a.q3,
+            a.q4,
+            a.q5,
+            a.q6,
+            a.q7,
+            a.q8,
+            a.q9,
+            a.q10,
+            a.q11,
+            a.q12,
+            a.q13,
+            a.q14,
+          ],
+          note: a.q15 ?? null,
+        };
+      });
+
+      if (format === "ndjson") {
+        res.type("application/x-ndjson");
+        res.send(data.map((row) => JSON.stringify(row)).join("\n"));
+      } else {
+        res.json({ ok: true, count: data.length, data });
+      }
+    }
+  );
+});
+
 // Catch-all for unknown API routes
 app.use("/api", (_req, res) => res.status(404).json({ error: "Not found" }));
 
