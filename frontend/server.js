@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -128,13 +129,11 @@ function formatRow(row) {
     id: row.id,
     created_at: row.created_at,
     answers,
-    ai_summary: `Survey #${row.id} on ${row.created_at}: experience=${answers.q1}${
-      answers.q1_follow ? ` (${answers.q1_follow})` : ""
-    }; interests: ${
-      ["q2","q3","q4","q5","q6","q7","q8","q9","q10","q11","q12","q13","q14"]
+    ai_summary: `Survey #${row.id} on ${row.created_at}: experience=${answers.q1}${answers.q1_follow ? ` (${answers.q1_follow})` : ""
+      }; interests: ${["q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11", "q12", "q13", "q14"]
         .map((k) => `${k}:${answers[k] ?? "n/a"}`)
         .join(", ")
-    }; notes: ${answers.q15 || "none"}`,
+      }; notes: ${answers.q15 || "none"}`,
   };
 }
 
@@ -291,6 +290,11 @@ app.get("/api/recommendations", (req, res) => {
       (err, stdout, stderr) => {
         if (err) {
           console.error("Gemini script error", err, stderr);
+          // Only return 500 if we didn't get stdout (fallback)
+          // Actually, if err is present, child process likely failed. 
+          // But our python script now catches exceptions and uses fallback.
+          // If it exits with 0 but prints to stderr, err is null.
+          // If python fails completely, return 500.
           return res.status(500).json({ error: "Gemini processing failed" });
         }
         try {
@@ -304,18 +308,18 @@ app.get("/api/recommendations", (req, res) => {
     );
   };
 
-  if (!fs.existsSync(ndjsonPath)) {
-    // regenerate from DB, then run Gemini
-    return writeNdjsonFile(ndjsonPath, 500, (err) => {
-      if (err) {
-        console.error("NDJSON regen error", err);
-        return res.status(500).json({ error: "Failed to regenerate NDJSON" });
+  // Always regenerate NDJSON to ensure fresh data
+  writeNdjsonFile(ndjsonPath, 500, (err) => {
+    if (err) {
+      console.error("NDJSON regen error", err);
+      // If write fails, try running anyway if file exists
+      if (fs.existsSync(ndjsonPath)) {
+        return runGemini();
       }
-      runGemini();
-    });
-  }
-
-  runGemini();
+      return res.status(500).json({ error: "Failed to regenerate NDJSON" });
+    }
+    runGemini();
+  });
 });
 
 // Compact export: minimal keys to save tokens; optionally NDJSON via ?format=ndjson

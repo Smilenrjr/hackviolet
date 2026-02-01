@@ -14,6 +14,21 @@ import json
 import os
 from pathlib import Path
 from typing import Optional
+import sys
+
+# Try to load .env from frontend directory
+try:
+  from dotenv import load_dotenv
+  # Look for .env in frontend dir relative to this script
+  script_dir = Path(__file__).parent
+  frontend_env = script_dir.parent / "frontend" / ".env"
+  if frontend_env.exists():
+    load_dotenv(frontend_env)
+  else:
+    # Try current dir or parent (standard locations)
+    load_dotenv()
+except ImportError:
+  sys.stderr.write("WARNING: python-dotenv not installed. Environment variables must be set manually.\\n")
 
 try:
   import google.generativeai as genai
@@ -84,9 +99,17 @@ Keep responses concise (max 18 words per reason).
 
 def call_gemini(prompt: str) -> dict:
   api_key = os.getenv("GEMINI_API_KEY")
-  if not api_key or not genai:
+  
+  missing = []
+  if not genai:
+    missing.append("google-generativeai library not installed")
+  if not api_key:
+    missing.append("GEMINI_API_KEY environment variable not set")
+    # Debug info for the user
+
+  if missing:
     import sys
-    sys.stderr.write("WARNING: GEMINI_API_KEY not found or genai import failed. Using fallback.\\n")
+    sys.stderr.write(f"WARNING: {' and '.join(missing)}. Using fallback.\\n")
     # fallback so the app still works without network/key
     return {
       "languages": [
@@ -113,7 +136,8 @@ def call_gemini(prompt: str) -> dict:
 
   try:
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    # Using gemini-flash-latest for best availability
+    model = genai.GenerativeModel("gemini-flash-latest")
     resp = model.generate_content(prompt)
     text = resp.text or ""
     # try to locate JSON in response
